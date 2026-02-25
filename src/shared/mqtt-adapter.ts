@@ -69,14 +69,23 @@ export class UniversalMqttAdapter implements MqttAdapter {
         const options = this.buildMqttOptions()
         this.client = mqtt.connect(this.options.host, options)
 
+        let connected = false
         this.client.on('connect', (connack) => {
           // Store CONNACK properties for later access
           this.connackProperties = connack?.properties
+          connected = true
           resolve()
         })
 
         this.client.on('error', (error) => {
           reject(error)
+        })
+
+        this.client.on('close', () => {
+          // closed but not connected
+          if (!connected) {
+            reject(new Error('Connection closed'))
+          }
         })
 
         // Set a connection timeout
