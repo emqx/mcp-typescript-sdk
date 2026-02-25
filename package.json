@@ -1,6 +1,6 @@
 {
   "name": "@emqx-ai/mcp-mqtt-sdk",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "MCP (Model Context Protocol) over MQTT SDK for TypeScript",
   "type": "module",
   "main": "dist/index.js",
